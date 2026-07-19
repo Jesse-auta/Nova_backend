@@ -65,3 +65,4 @@ migrations/
 supabase/
 # railway
 .railway/
+text.txt
