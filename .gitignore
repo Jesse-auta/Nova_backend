@@ -1,0 +1,67 @@
+# --- Python cache / bytecode ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+*.pyo
+
+# --- Virtual environments ---
+.venv/
+venv/
+ENV/
+env/
+
+# --- Envs / secrets ---
+.env
+.env.*
+!.env.example
+
+# --- Logs ---
+*.log
+
+# --- Databases / local state ---
+*.sqlite3
+*.db
+*.sqlite
+*.duckdb
+
+# Common local DB filenames
+db.sqlite3
+database.sqlite3
+
+# --- Build / distribution ---
+build/
+dist/
+*.egg-info/
+.eggs/
+.eggs/
+
+# --- Testing / coverage ---
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.coverage.xml
+*.cover
+
+# --- Type checking ---
+.mypy_cache/
+.pyre/
+
+# --- Tools / formatter caches ---
+.ruff_cache/
+
+# --- Editor / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Containers / Docker artifacts ---
+*.tar
+
+# --- Supabase / migrations local artifacts (safe to ignore if they don't exist) ---
+migrations/
+supabase/
+# railway
+.railway/
