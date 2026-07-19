@@ -1,2 +1,0 @@
-groq=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
-11labs=sk_54b0b71041dd403898c4baf875f2858fbebb4461e3266c2a
