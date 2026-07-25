@@ -3,7 +3,7 @@ from fastapi import APIRouter, Request, HTTPException
 from datetime import datetime
 import json
 
-from app.schemas.vapi import VapiWebhookPayload, VapiWebhookResponse
+
 from app.db.models import CallRecordCreate
 from app.db.supabase_client import CallRepository
 from app.config import settings
