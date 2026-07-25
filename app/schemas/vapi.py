@@ -68,7 +68,8 @@ class VapiWebhookPayload(BaseModel):
 
 # ============================================================================
 # WEBHOOK RESPONSE
-# ============================================================================
+# =======================================
+#=====================================
 
 class VapiWebhookResponse(BaseModel):
     success: bool = Field(..., description="Whether we processed the webhook")
