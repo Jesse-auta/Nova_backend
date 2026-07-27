@@ -102,7 +102,7 @@ class CallRepository:
             logger.info(f"Inserting call record: {call_data.call_id}")
             
             # Convert Pydantic model to dict (Supabase expects dict)
-            data = call_data.dict()
+            data = call_data.model_dump(mode="json")
             
             # Insert into Supabase (returns the inserted row)
             response = supabase.table(CallRepository.TABLE_NAME).insert(data).execute()
