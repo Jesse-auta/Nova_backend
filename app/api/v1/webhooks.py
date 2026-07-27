@@ -43,7 +43,7 @@ async def handle_call_ended(request: Request):
 
         call_id = webhook_payload.call_id
         if not call_id:
-            call_id = body.get("call_id") or body.get("id") or f"call_{int(datetime.now(datetime.timezone.utc.timestamp()))}"
+            call_id = body.get("call_id") or body.get("id") or f"call_{int(datetime.now(timezone.utc).timestamp())}"
             logger.warning(f"call_id was missing, using fallback: {call_id}")
 
         transcript = ""
@@ -52,7 +52,7 @@ async def handle_call_ended(request: Request):
 
         caller_name, reason_for_call = extract_caller_info(transcript)
 
-        started_at = webhook_payload.started_at or datetime.now(datetime.timezone.utc())
+        started_at = webhook_payload.started_at or datetime.now(timezone.utc)
         ended_at = webhook_payload.ended_at
         status = webhook_payload.status or "completed"
 

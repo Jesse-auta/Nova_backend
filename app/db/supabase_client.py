@@ -6,6 +6,34 @@ from datetime import datetime
 from app.config import settings
 from app.db.models import CallRecord, CallRecordCreate, CallRecordResponse
 
+
+def _serialize_dates(data: dict) -> dict:
+    """
+    Recursively convert any datetime objects in the dict to ISO format strings.
+    
+    Why this is needed:
+    - Pydantic's model_dump(mode="json") should convert datetime → ISO string,
+      but the supabase client's internal HTTP request uses json.dumps() which
+      can still encounter raw datetime objects in some edge cases / versions.
+    - This ensures 100% that no datetime objects leak through to the JSON serializer.
+    """
+    serialized = {}
+    for key, value in data.items():
+        if isinstance(value, dict):
+            serialized[key] = _serialize_dates(value)
+        elif isinstance(value, list):
+            serialized[key] = [
+                _serialize_dates(item) if isinstance(item, dict) else (
+                    item.isoformat() if isinstance(item, datetime) else item
+                )
+                for item in value
+            ]
+        elif isinstance(value, datetime):
+            serialized[key] = value.isoformat()
+        else:
+            serialized[key] = value
+    return serialized
+
 logger = logging.getLogger(__name__)
 
 """
@@ -103,6 +131,9 @@ class CallRepository:
             
             # Convert Pydantic model to dict (Supabase expects dict)
             data = call_data.model_dump(mode="json")
+            
+            # Ensure all datetime fields are ISO strings (belt-and-suspenders for JSON serialization)
+            data = _serialize_dates(data)
             
             # Insert into Supabase (returns the inserted row)
             response = supabase.table(CallRepository.TABLE_NAME).insert(data).execute()
